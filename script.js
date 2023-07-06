@@ -108,6 +108,4 @@ const calculateExpression = (expression) => {
     return answer.pop();
 }
 
-//Look at how the parsing is working for numbers > 9
-console.log(calculateExpression('3+5-9+2-5*20')); //Seems to have issues with numbers > 9
-console.log(calculateExpression('3+5-4*2'));
+module.exports = calculateExpression;
