@@ -1,5 +1,3 @@
-const exp = require("constants");
-
 /******************************************
  * ARITHMETIC FUNCTIONS
  *****************************************/
@@ -44,7 +42,7 @@ const convertToPostFix = (expression) => {
     let parsedExpression = parse(expression);
     let stack = [];
     let postfix = [];
-    for (let ch of expression) {
+    for (let ch of parsedExpression) {
         if (ch == '*') {
             stack.push(ch);
         } else if (ch == '/') {
@@ -92,16 +90,16 @@ const convertToPostFix = (expression) => {
 const operate = (opOne, operator, opTwo) => {
     switch(operator) {
         case '*':
-            multiply(opOne, opTwo);
+            return multiply(opOne, opTwo);
             break;
         case '/':
-            divide(opOne, opTwo);
+            return divide(opOne, opTwo);
             break;
         case '+':
-            add(opOne, opTwo);
+            return add(opOne, opTwo);
             break;
         case '-':
-            subtract(opOne, opTwo);
+            return subtract(opOne, opTwo);
             break;
         default:
             console.log(`Error: ${operator} is not a valid operator.`)
@@ -116,22 +114,11 @@ const calculateExpression = (expression) => {
 
     //REPLACE THIS WITH THE OPERATE FUNCTION!!!
     for (let ch of postfix) {
-        if (ch == '*') {
+        if (ch == '*' || ch == '/' || ch == '+' || ch == '-') {
             opTwo = Number(answer.pop());
             opOne = Number(answer.pop());
-            answer.push(multiply(opOne, opTwo));
-        } else if (ch == '/') {
-            opTwo = Number(answer.pop());
-            opOne = Number(answer.pop());
-            answer.push(divide(opOne, opTwo));
-        } else if (ch == '+') {
-            opTwo = Number(answer.pop());
-            opOne = Number(answer.pop());
-            answer.push(add(opOne, opTwo));
-        } else if (ch == '-') {
-            opTwo = Number(answer.pop());
-            opOne = Number(answer.pop());
-            answer.push(subtract(opOne, opTwo));
+            answer.push(operate(opOne, ch, opTwo));
+            
         } else {
             answer.push(ch);
         }
@@ -140,5 +127,4 @@ const calculateExpression = (expression) => {
     return answer.pop();
 }
 
-// console.log(calculateExpression('3+5-2*3'));
 module.exports = calculateExpression;
